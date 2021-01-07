@@ -9,7 +9,7 @@ Live Q & A site for a/A
 [x] Question Card
 
 
-# MVP
+# Frontend MVP
 [x] Question feed
 [x] Students asking questions
 [x] Instructor answer questions
@@ -27,8 +27,11 @@ Live Q & A site for a/A
 [x] Instructor saving questions
 
 
-
-
-# Backend repo
-https://github.com/gootieno/SimpleQA-backend.git
-# SimpleQA
+# Backend
+[] questions websockets
+[] likes websockets
+[] archived websockets
+[] highlighted websockets
+[] favorites websockets
+[] upvote/downvote websockets
+# through-the-eyes
