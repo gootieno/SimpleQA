@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { withStyles } from '@material-ui/core/styles';
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import homeImg from '../static/home-page-img.png';
-import AppBar from '@material-ui/core/AppBar';
-import Typography from '@material-ui/core/Typography';
-import CreateRoom from './DialogModals/CreateRoom';
-import JoinRoom from './DialogModals/JoinRoom';
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import { withStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles'
+import Button from '@material-ui/core/Button'
+import homeImg from '../static/home-page-img.png'
+import AppBar from '@material-ui/core/AppBar'
+import Typography from '@material-ui/core/Typography'
+import CreateRoom from './DialogModals/CreateRoom'
+import JoinRoom from './DialogModals/JoinRoom'
 
 const HomeWrapper = styled.div`
 	display: flex;
@@ -26,7 +26,7 @@ const HomeWrapper = styled.div`
 	h1 {
 		font-size: 3em;
 	}
-`;
+`
 
 const LoginBox = styled.div`
 	display: flex;
@@ -37,7 +37,7 @@ const LoginBox = styled.div`
 	width: 50vw;
 	border-radius: 5px;
 	margin: auto;
-`;
+`
 
 const RedColorButton = withStyles((theme) => ({
 	root: {
@@ -50,7 +50,7 @@ const RedColorButton = withStyles((theme) => ({
 			boxShadow: '0 0 0 0.1rem rgba(0,0,0,.4)',
 		},
 	},
-}))(Button);
+}))(Button)
 
 const BlueColorButton = withStyles((theme) => ({
 	root: {
@@ -63,7 +63,7 @@ const BlueColorButton = withStyles((theme) => ({
 			boxShadow: '0 0 0 0.1rem rgba(0,0,0,.4)',
 		},
 	},
-}))(Button);
+}))(Button)
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -76,91 +76,92 @@ const useStyles = makeStyles((theme) => ({
 		backgroundColor: '#B0021D',
 		fontWeight: 500,
 		fontFamily: 'Roboto',
+		cursor: 'default',
 	},
-}));
+}))
 
-const roomStepper = () => ['Select Cohort', 'Enter Room Name', 'Room Id'];
+const roomStepper = () => ['Select Cohort', 'Enter Room Name', 'Room Id']
 
 const roomStepperContent = (step, roomId, adminId) => {
 	switch (step) {
 		case 0:
-			return 'Select your cohort.';
+			return 'Select your cohort.'
 		case 1:
-			return 'Room name';
+			return 'Room name'
 		case 2:
-			return `Room id: ${roomId} Admin id: ${adminId} `;
+			return `Room id: ${roomId} Admin id: ${adminId} `
 		default:
-			return 'Unknown step';
+			return 'Unknown step'
 	}
-};
+}
 
 const Home = () => {
-	const [roomName, setRoomName] = useState('');
-	const [cohortName, setCohortName] = useState('');
-	const [roomId, setRoomId] = useState(0);
-	const [adminId, setAdminId] = useState(0);
-	const [activeStep, setActiveStep] = useState(0);
-	const [open, setOpen] = useState(false);
-	const [openRoom, setOpenRoom] = useState(false);
-	const [openAdmin, setOpenAdmin] = useState(false);
-	const [openStudent, setOpenStudent] = useState(false);
+	const [roomName, setRoomName] = useState('')
+	const [cohortName, setCohortName] = useState('')
+	const [roomId, setRoomId] = useState(0)
+	const [adminId, setAdminId] = useState(0)
+	const [activeStep, setActiveStep] = useState(0)
+	const [open, setOpen] = useState(false)
+	const [openRoom, setOpenRoom] = useState(false)
+	const [openAdmin, setOpenAdmin] = useState(false)
+	const [openStudent, setOpenStudent] = useState(false)
 
 	const handleCreateRoom = (e) => {
-		e.preventDefault();
-		handleModal();
-		setActiveStep(0);
-		setRoomName('');
-		setCohortName('');
-		window.localStorage.setItem('ADMIN_ID', adminId);
-		window.location.href = `/${roomId}`;
-	};
+		e.preventDefault()
+		handleModal()
+		setActiveStep(0)
+		setRoomName('')
+		setCohortName('')
+		window.localStorage.setItem('ADMIN_ID', adminId)
+		window.location.href = `/${roomId}`
+	}
 
 	const handleModal = () => {
-		setActiveStep(0);
-		setRoomName('');
-		setCohortName('');
-		setOpen(!open);
-	};
+		setActiveStep(0)
+		setRoomName('')
+		setCohortName('')
+		setOpen(!open)
+	}
 
 	const handleAdmin = () => {
-		setOpenAdmin(!openAdmin);
-		setOpenStudent(false);
-	};
+		setOpenAdmin(!openAdmin)
+		setOpenStudent(false)
+	}
 
 	const handleStudent = () => {
-		setOpenStudent(!openStudent);
-		setOpenAdmin(false);
-	};
+		setOpenStudent(!openStudent)
+		setOpenAdmin(false)
+	}
 
 	const handleJoinRoom = () => {
-		setOpenAdmin(false);
-		setOpenStudent(false);
-		setOpenRoom(!openRoom);
-	};
+		setOpenAdmin(false)
+		setOpenStudent(false)
+		setOpenRoom(!openRoom)
+	}
 
 	const generateIds = () => {
-		const admin = Math.floor(Math.random() * Math.floor(1234));
-		const room = Math.floor(Math.random() * Math.floor(12));
+		const admin = Math.floor(Math.random() * Math.floor(1234))
+		const room = Math.floor(Math.random() * Math.floor(12))
 
-		setRoomId(room);
-		setAdminId(admin);
-		setActiveStep((prevActiveStep) => prevActiveStep + 1);
-	};
+		setRoomId(room)
+		setAdminId(admin)
+		setActiveStep((prevActiveStep) => prevActiveStep + 1)
+	}
 
-	const handleRoomName = (e) => setRoomName(e.target.value);
-	const handleCohort = (e) => setCohortName(e.target.value);
+	const handleRoomName = (e) => setRoomName(e.target.value)
+	const handleCohort = (e) => setCohortName(e.target.value)
 
 	const handleNextStep = () => {
 		activeStep === 1
 			? generateIds()
-			: setActiveStep((prevActiveStep) => prevActiveStep + 1);
-	};
+			: setActiveStep((prevActiveStep) => prevActiveStep + 1)
+	}
 	const handlePrevStep = () => {
-		setActiveStep((prevActiveStep) => prevActiveStep - 1);
-	};
+		setActiveStep((prevActiveStep) => prevActiveStep - 1)
+	}
 
-	const steps = roomStepper();
-	const classes = useStyles();
+	const steps = roomStepper()
+	const classes = useStyles()
 	return (
 		<div id='home-page' className={classes.root}>
 			<AppBar position='static'>
@@ -212,7 +213,7 @@ const Home = () => {
 				/>
 			</HomeWrapper>
 		</div>
-	);
-};
+	)
+}
 
-export default Home;
+export default Home
