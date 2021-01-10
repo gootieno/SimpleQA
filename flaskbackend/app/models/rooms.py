@@ -1,5 +1,6 @@
 from ..models import db
 
+
 class Room(db.Model):
     __tablename__ = "rooms"
 
@@ -10,6 +11,48 @@ class Room(db.Model):
 
     def to_dict():
         return {
-            'id': self.id, 
+            'id': self.id,
             'room_name': self.room_name,
+            'questions': [question.to_dict() for question in questions]
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
