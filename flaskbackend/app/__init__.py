@@ -1,21 +1,26 @@
 from flask import Flask
 from flask_migrate import Migrate
 from flask_socketio import SocketIO
+from app.config import Configuration
 import os
 
+#DB Imports
 from app.models import db
-from app.config import Configuration
+
+#BP Imports
+from app.routes import question_route
+
+
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'secret!'
-socketio = SocketIO(app)
-
-if os.environ.get("FLASK_ENV") == 'production':
-    app = Flask(__name__, static_folder='../../frontend/build/static',
-                static_url_path='/static')
-else:
-    app = Flask(__name__)
+# socketio = SocketIO(app)
 
 app.config.from_object(Configuration)
 db.init_app(app)
-migrate = Migrate(app, db)
+Migrate(app, db)
+
+app.register_blueprint(question_route.bp)
+
+@app.route('/')
+def hi():
+    return "<h1>Hello</h1>"
