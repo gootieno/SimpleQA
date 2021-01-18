@@ -8,6 +8,8 @@ import TextField from '@material-ui/core/TextField'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import { CTX } from '../Store'
 
+import { getAllQuestions } from '../api/flaskapi'
+
 const RoomWrapper = styled.div`
 	display: flex;
 	flex-flow: column;
@@ -40,7 +42,10 @@ const Room = (props) => {
 
 	// CTX Store
 	const { rooms, sendQuestionAction } = useContext(CTX)
-	const questions = rooms[`${props.location.pathname.slice(1)}`]
+	// const questions = rooms[`${props.location.pathname.slice(1)}`]
+	useEffect(() => {
+		getAllQuestions()
+	}, [])
 
 	const handleClick = () => setClicked(true)
 	const handleClickAway = () => setClicked(false)
@@ -52,14 +57,9 @@ const Room = (props) => {
 		})
 	}
 
-	const handleSubmit = () => {
-		sendQuestionAction({
-			...question,
-			upvotes: 0,
-			answers: [],
-			room: `${props.location.pathname.slice(1)}`,
-			createdAt: new Date(),
-		})
+	const handleSubmit = (e) => {
+		e.preventDefault()
+		getAllQuestions()
 		setQuestion({ question: '', from: '' })
 
 		setClicked(false)
