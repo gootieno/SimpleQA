@@ -1,13 +1,13 @@
-import React, { useState, useContext } from 'react';
-import styled from 'styled-components';
-import { makeStyles, createMuiTheme } from '@material-ui/core/styles';
-import { CTX } from '../Store';
-import { Card, Button, Typography, CardContent } from '@material-ui/core';
-import DeleteCard from './DialogModals/DeleteCardModal';
-import ReplyModal from './DialogModals/ReplyModal';
-import HoverIconButtons from './QuestionCardButtons/HoverIconButtons';
-import LikeButton from './QuestionCardButtons/LikeButton';
-import AnsweredQuestions from './DialogModals/AnsweredQuestions';
+import React, { useState, useContext } from 'react'
+import styled from 'styled-components'
+import { makeStyles, createMuiTheme } from '@material-ui/core/styles'
+import { CTX } from '../Store'
+import { Card, Button, Typography, CardContent } from '@material-ui/core'
+import DeleteCard from './DialogModals/DeleteCardModal'
+import ReplyModal from './DialogModals/ReplyModal'
+import HoverIconButtons from './QuestionCardButtons/HoverIconButtons'
+import LikeButton from './QuestionCardButtons/LikeButton'
+import AnsweredQuestions from './DialogModals/AnsweredQuestions'
 
 const QuestionCardWrapper = styled.div`
 	margin: 20px 0;
@@ -42,7 +42,7 @@ const QuestionCardWrapper = styled.div`
 	#reply {
 		autofocus: true;
 	}
-`;
+`
 
 //--------------------------------------------- theme for material icon colors --------------------
 
@@ -59,7 +59,7 @@ const theme = createMuiTheme({
 			main: '#f57c00',
 		},
 	},
-});
+})
 //-------------------------------------------------------------------------------------------------
 
 //-------------------------------------------- class styling for componenets ----------------------
@@ -119,87 +119,88 @@ const useStyles = makeStyles((theme) => ({
 		paddingRight: '0px',
 	},
 	actionButtons: { marginLeft: '.4rem', bottom: '.4rem' },
-}));
+}))
 
 const QuestionCard = ({ question }) => {
-	const [open, setOpen] = useState(false);
-	const [show, setShow] = useState(false);
+	const [open, setOpen] = useState(false)
+	const [show, setShow] = useState(false)
 
-	const [deleteModal, setDeleteModal] = useState(false);
+	const [deleteModal, setDeleteModal] = useState(false)
 	const [button, setButton] = useState({
 		favorite: false,
 		highlighted: false,
-	});
-	const [replies, setReplies] = useState({ admin: [], student: [] });
-	const [replyValue, setReplyValue] = useState('');
-	const [openReplies, setOpenReplies] = useState(false);
+	})
+	const [replies, setReplies] = useState({ admin: [], student: [] })
+	const [replyValue, setReplyValue] = useState('')
+	const [openReplies, setOpenReplies] = useState(false)
 
-	const adminId = window.localStorage.getItem('ADMIN_ID');
+	const adminId = window.localStorage.getItem('ADMIN_ID')
 
 	//------------------------------------- reply button and dialog component actions ------------
 	const handleDialog = () => {
-		setOpen(!open);
-		setReplyValue('');
-		setShow(false);
-	};
+		setOpen(!open)
+		setReplyValue('')
+		setShow(false)
+	}
 
 	const toggleReply = () => {
-		setOpen(!open);
-	};
+		setOpen(!open)
+	}
 
 	const handleSubmit = (e) => {
 		//send the reply array to database
-		const { admin, student } = replies;
-		e.preventDefault();
+		const { admin, student } = replies
+		e.preventDefault()
 		adminId
 			? setReplies({ ...replies, admin: [...admin, replyValue] })
-			: setReplies({ ...replies, student: [...student, replyValue] });
+			: setReplies({ ...replies, student: [...student, replyValue] })
 
-		console.log(replies);
+		console.log(replies)
 
-		setReplyValue('');
+		setReplyValue('')
 
-		setOpen(false);
-	};
+		setOpen(false)
+	}
 
 	const handleReplyChange = (e) => {
-		setReplyValue(e.target.value);
-	};
+		setReplyValue(e.target.value)
+	}
 
 	const openAnsweredQuestions = () => {
-		setOpenReplies(!openReplies);
-	};
+		setOpenReplies(!openReplies)
+	}
 
 	//--------------------------------------------------------------------------------------------
 
 	//------------------------------------- reducer and socket actions for question card changes--
-	const { sendUpvoteAction } = useContext(CTX);
+	const { sendUpvoteAction } = useContext(CTX)
 
 	const handleIncrement = () => {
-		const updatedQuestion = { ...question, upvotes: question.upvotes + 1 };
-		sendUpvoteAction(updatedQuestion);
-	};
+		const updatedQuestion = { ...question, upvotes: question.upvotes + 1 }
+		sendUpvoteAction(updatedQuestion)
+	}
 	//--------------------------------------------------------------------------------------------
 
 	//--------------------------------------- icon button actions ---------------------------------
 	const handleFavoriteIcon = () => {
-		const { favorite } = button;
-		setButton({ ...button, favorite: !favorite });
-	};
+		const { favorite } = button
+		setButton({ ...button, favorite: !favorite })
+	}
 
 	const handleHighlightedIcon = () => {
-		const { highlighted } = button;
-		setButton({ ...button, highlighted: !highlighted });
-	};
+		const { highlighted } = button
+		setButton({ ...button, highlighted: !highlighted })
+	}
 
 	const handleDelete = () => {
 		//do some code to delete question from database
-		setDeleteModal(false);
-	};
+		setDeleteModal(false)
+	}
 	//--------------------------------------------------------------------------------------------
-	let firstPart = question.question.slice(0, 195);
+	console.log('this is the questions ', question)
+	let firstPart = [question].questions.slice(0, 195)
 
-	const classes = useStyles();
+	const classes = useStyles()
 	return (
 		<QuestionCardWrapper>
 			<Card
@@ -292,7 +293,7 @@ const QuestionCard = ({ question }) => {
 				</CardContent>
 			</Card>
 		</QuestionCardWrapper>
-	);
-};
+	)
+}
 
-export default QuestionCard;
+export default QuestionCard

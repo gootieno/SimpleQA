@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
-import QuestionCard from './QuestionCard';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
+import React, { useState } from 'react'
+import QuestionCard from './QuestionCard'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
+import AppBar from '@material-ui/core/AppBar'
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
+import Typography from '@material-ui/core/Typography'
+import Box from '@material-ui/core/Box'
+import { getAllQuestions } from '../api/flaskapi'
 
 function TabPanel(props) {
-	const { children, value, index, ...other } = props;
+	const { children, value, index, ...other } = props
 
 	return (
 		<div
@@ -24,14 +25,14 @@ function TabPanel(props) {
 				</Box>
 			)}
 		</div>
-	);
+	)
 }
 
 function a11yProps(index) {
 	return {
 		id: `full-width-tab-${index}`,
 		'aria-controls': `full-width-tabpanel-${index}`,
-	};
+	}
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -39,27 +40,28 @@ const useStyles = makeStyles((theme) => ({
 		backgroundColor: theme.palette.background.paper,
 		width: '100%',
 	},
-}));
+}))
 
-const Feed = ({ questions }) => {
-	const classes = useStyles();
-	const theme = useTheme();
-	const [value, setValue] = useState(0);
+const Feed = ({ question }) => {
+	const classes = useStyles()
+	const theme = useTheme()
+	const [value, setValue] = useState(0)
 
-  if (!value) {
-    questions.sort((a, b) => b.upvotes - a.upvotes);
-  } else {
-    questions.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
-  }
+	//   if (!value) {
+	//     questions.sort((a, b) => b.upvotes - a.upvotes);
+	//   } else {
+	//     questions.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+	//   }
 
+	const questions = getAllQuestions()
 
 	const handleChange = (e, newValue) => {
-		setValue(newValue);
-	};
+		setValue(newValue)
+	}
 
 	return (
 		<>
-			{questions.length > 0 ? (
+			{[questions].length > 0 ? (
 				<div className={classes.root}>
 					<AppBar position='static' color='default'>
 						<Tabs
@@ -83,12 +85,13 @@ const Feed = ({ questions }) => {
 				''
 			)}
 			<div>
-				{questions.map(question => (
+				{[questions].map((question) => (
+					// console.log('this is the questions')
 					<QuestionCard key={question._id} question={question} />
 				))}
 			</div>
 		</>
-	);
-};
+	)
+}
 
-export default Feed;
+export default Feed
